@@ -2,10 +2,11 @@
 from __init__ import CURSOR, CONN
 from department import Department
 
-class Employee:
+class Employee: 
 
     # Dictionary of objects saved to the database.
     all = {}
+    
 
     def __init__(self, name, job_title, department_id, id=None):
         self.id = id
@@ -103,7 +104,7 @@ class Employee:
             WHERE id = ?
         """
         CURSOR.execute(sql, (self.name, self.job_title,
-                             self.department_id, self.id))
+                        self.department_id, self.id))
         CONN.commit()
 
     def delete(self):
@@ -187,4 +188,9 @@ class Employee:
 
     def reviews(self):
         """Return list of reviews associated with current employee"""
-        pass
+        from review import Review
+        sql="""SELECT * FROM reviews
+            WHERE employee_id=?
+        """
+        rows=CURSOR.execute(sql, (self.id,),).fetchall()
+        return [Review.instance_from_db(row) for row in rows]
