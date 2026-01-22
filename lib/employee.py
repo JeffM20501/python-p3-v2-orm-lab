@@ -60,6 +60,8 @@ class Employee:
 
     @classmethod
     def create_table(cls):
+        
+        
         """ Create a new table to persist the attributes of Employee instances """
         sql = """
             CREATE TABLE IF NOT EXISTS employees (
